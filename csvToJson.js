@@ -9,7 +9,8 @@
 function xmlListener(){
   let csvData = xmlReq.responseText;
   let res = csvJSON(csvData);
-  console.log(res);
+  //console.log(res);
+  localStorage.setItem('data', res);
 }
 /**
  * Listner to error event in XMLHttpRequest
