@@ -1,8 +1,13 @@
 "use strict";
 angular.module('socialCopsDemo')
     .controller('playedBigTeamsController', playedBigTeamsController);
-
-function playedBigTeamsController($scope, $rootScope, $location) {
+/**
+ * This controller controls the view for playedBigTeams partial.
+ * @param   $scope  It acts like a glue between view and controller.
+ * @param  $rootScope It is parent scope for all scopes.  Used to access global
+ *                     variables and functions.
+ */
+function playedBigTeamsController($scope, $rootScope) {
     console.log("Inside third Controller...");
     var data = {};
     if (localStorage.getItem('data') != undefined || localStorage.getItem('data') != '') {
@@ -14,7 +19,6 @@ function playedBigTeamsController($scope, $rootScope, $location) {
     let runsAgainstNations = new Array(cricketNations.length);
     let wicketsAgainstNations = new Array(cricketNations.length);
     for (let i = 0; i < data.length - 1; i++) {
-        console.log(data[i].opposition.substr(2));
         let nationIndex = checkNationIndex(data[i].opposition.substr(2));
         if (nationIndex != -1) {
             if (runsAgainstNations[nationIndex] == undefined && !$rootScope.ifNaN(data[i].batting_score))
@@ -28,19 +32,20 @@ function playedBigTeamsController($scope, $rootScope, $location) {
         }
 
     }
-    for (let i = 0; i < wicketsAgainstNations.length; i++) {
-        console.log(wicketsAgainstNations[i]);
-    }
-
+    /**
+     * This function returns the index of a nation from cricketNations array.
+     * @param  {string} nation Nation whose index is to be searched.
+     * @return {number} Index, if nation is found in array; else -1.
+     */
     function checkNationIndex(nation) {
-        let loc = -1;
-        for (let i = 0; i < cricketNations.length; i++) {
-            if (cricketNations[i] == nation) {
-                loc = i;
-                break;
-            }
-        }
-        return loc;
+      let loc = -1;
+      for (let i = 0; i < cricketNations.length; i++) {
+          if (cricketNations[i] == nation) {
+              loc = i;
+              break;
+          }
+      }
+      return loc;
     };
     var runsAgainstTeams = document.getElementById('runsAgainstTeams');
     var wicketsAgainstTeams = document.getElementById('wicketsAgainstTeams');
@@ -62,7 +67,7 @@ function playedBigTeamsController($scope, $rootScope, $location) {
             data: runsAgainstNations,
         }]
     };
-    var wicketsTakenData = {
+    let wicketsTakenData = {
         labels: cricketNations,
         datasets: [{
             label: 'Wickets taken by Sachin against Test playing Nations',
@@ -80,18 +85,12 @@ function playedBigTeamsController($scope, $rootScope, $location) {
             data: wicketsAgainstNations,
         }]
     };
-    var runsBarChart = new Chart(runsAgainstTeams, {
+    let runsBarChart = new Chart(runsAgainstTeams, {
         type: 'bar',
         data: teamsBarChartData
     });
-    var wicketsBarChart = new Chart(wicketsAgainstTeams, {
+    let wicketsBarChart = new Chart(wicketsAgainstTeams, {
         type: 'bar',
         data: wicketsTakenData
     });
-    $scope.previousPage = function(){
-      $location.path('/debut');
-    };
-    $scope.nextPage = function(){
-      $location.path('/battingStats');
-    }
 };

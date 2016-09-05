@@ -1,10 +1,12 @@
 "use strict";
+/**
+ * This file is the controller of battingStats page.
+ */
 angular.module('socialCopsDemo')
   .controller('battingStatsController', battingStatsController);
 
-  function battingStatsController($scope, $rootScope, $location){
-    console.log("Inside Second Controller...");
-    var data = {};
+  function battingStatsController($scope, $rootScope){
+    let data = {};
     if(localStorage.getItem('data') != undefined || localStorage.getItem('data') != ''){
       data  = JSON.parse(localStorage.getItem("data"));
     }
@@ -98,18 +100,12 @@ angular.module('socialCopsDemo')
             ]
         }]
     };
-    var runLineChart = new Chart(runByYearGraph, {
+    let runLineChart = new Chart(runByYearGraph, {
       type: 'line',
       data: lineChartData
     });
-    var runsByTossPieChart = new Chart(runsByToss, {
+    let runsByTossPieChart = new Chart(runsByToss, {
       type: 'pie',
       data: runsByTossChartData
-    })
-    $scope.previousPage = function(){
-      $location.path('/debut');
-    };
-    $scope.nextPage = function(){
-      $location.path('/teamPerformance');
-    };
+    });
   };

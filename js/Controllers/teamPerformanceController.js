@@ -1,9 +1,13 @@
 "use strict";
 angular.module('socialCopsDemo')
     .controller('teamPerformanceController', teamPerformanceController);
-
-
-function teamPerformanceController($scope, $location, $rootScope) {
+/**
+ * This controllers controls the view for teamPerformanceController.
+ * @param   $scope  It acts like a glue between view and controller.
+ * @param  $rootScope It is parent scope for all scopes.  Used to access global
+ *                     variables and functions.
+ */
+function teamPerformanceController($scope, $rootScope) {
     let data = {};
     let underFifty = 0;
     let fifty = 0;
@@ -26,7 +30,6 @@ function teamPerformanceController($scope, $location, $rootScope) {
     if (localStorage.getItem('data') != undefined || localStorage.getItem('data') == '') {
         data = JSON.parse(localStorage.getItem("data"));
     }
-    console.log("Total Matches Played::" + data.length);
     for (let i in data) {
         if (!$rootScope.ifNaN(data[i].batting_score) && parseInt(data[i].batting_score) < 50) {
             underFifty++;
@@ -122,10 +125,4 @@ function teamPerformanceController($scope, $location, $rootScope) {
         type: 'horizontalBar',
         data: graphWicksData
     });
-    $scope.previousPage = function() {
-        $location.path('/battingStats');
-    };
-    $scope.nextPage = function() {
-        $location.path('/masterBlaster');
-    }
 };
