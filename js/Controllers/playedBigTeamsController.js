@@ -1,16 +1,21 @@
 "use strict";
 angular.module('socialCopsDemo')
     .controller('playedBigTeamsController', playedBigTeamsController);
+
+//Injecting the dependencies explicitly to avoid post minification errors
+playedBigTeamsController.$inject = ['$scope', '$rootScope'];
+
 /**
  * This controller controls the view for playedBigTeams partial.
  * @param   $scope  It acts like a glue between view and controller.
  * @param  $rootScope It is parent scope for all scopes.  Used to access global
  *                     variables and functions.
  */
+
 function playedBigTeamsController($scope, $rootScope) {
     console.log("Inside third Controller...");
     var data = {};
-    if (localStorage.getItem('data') != undefined || localStorage.getItem('data') != '') {
+    if (localStorage.getItem('data') !== undefined || localStorage.getItem('data') !== '') {
         data = JSON.parse(localStorage.getItem("data"));
     }
     const cricketNations = ["Pakistan", "New Zealand", "Sri Lanka", "England",
@@ -20,14 +25,14 @@ function playedBigTeamsController($scope, $rootScope) {
     let wicketsAgainstNations = new Array(cricketNations.length);
     for (let i = 0; i < data.length - 1; i++) {
         let nationIndex = checkNationIndex(data[i].opposition.substr(2));
-        if (nationIndex != -1) {
-            if (runsAgainstNations[nationIndex] == undefined && !$rootScope.ifNaN(data[i].batting_score))
+        if (nationIndex !== -1) {
+            if (runsAgainstNations[nationIndex] === undefined && !$rootScope.ifNaN(data[i].batting_score))
                 runsAgainstNations[nationIndex] = parseInt(data[i].batting_score);
-            else if (runsAgainstNations[nationIndex] != undefined && !$rootScope.ifNaN(data[i].batting_score))
+            else if (runsAgainstNations[nationIndex] !== undefined && !$rootScope.ifNaN(data[i].batting_score))
                 runsAgainstNations[nationIndex] += parseInt(data[i].batting_score);
-            if (wicketsAgainstNations[nationIndex] == undefined && !$rootScope.ifNaN(data[i].wickets))
+            if (wicketsAgainstNations[nationIndex] === undefined && !$rootScope.ifNaN(data[i].wickets))
                 wicketsAgainstNations[nationIndex] = parseInt(data[i].wickets);
-            else if (wicketsAgainstNations[nationIndex] != undefined && !$rootScope.ifNaN(data[i].wickets))
+            else if (wicketsAgainstNations[nationIndex] !== undefined && !$rootScope.ifNaN(data[i].wickets))
                 wicketsAgainstNations[nationIndex] += parseInt(data[i].wickets);
         }
 
@@ -46,7 +51,7 @@ function playedBigTeamsController($scope, $rootScope) {
           }
       }
       return loc;
-    };
+    }
     var runsAgainstTeams = document.getElementById('runsAgainstTeams');
     var wicketsAgainstTeams = document.getElementById('wicketsAgainstTeams');
     var teamsBarChartData = {
@@ -93,4 +98,4 @@ function playedBigTeamsController($scope, $rootScope) {
         type: 'bar',
         data: wicketsTakenData
     });
-};
+}
