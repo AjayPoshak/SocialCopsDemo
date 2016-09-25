@@ -1,0 +1,10 @@
+{
+  "globalstrict": true,
+  "esversion": 6,
+  "undef": true,
+  "devel": true,
+  "debug": false,
+  "freeze": true,
+  "strict": false,
+  "predef": ["localStorage", "XMLHttpRequest", "angular", "document", "Chart"]
+}
