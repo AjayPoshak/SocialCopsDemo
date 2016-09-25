@@ -10,6 +10,9 @@ angular.module('socialCopsDemo')
  * @param  $location  Exposes the current url in address bar, and also
  *                    synchronises the changes done to url.
  */
+ //Injecting the dependencies explicitly to avoid post minification errors
+ globalController.$inject = ['$rootScope', '$location'];
+
   function globalController($rootScope, $location){
     /**
      * This function checks if a number is NaN or not.
@@ -35,7 +38,7 @@ angular.module('socialCopsDemo')
       else if(param === 'battingStats') $location.path('/playedBigTeams');
       else if(param === 'teamPerformance') $location.path('/battingStats');
       else if(param === 'masterBlaster') $location.path('/teamPerformance');
-      else console.log("Invalid Path Request");
+      else console.log("Invalid Path Request...");
     };
     /**
      * Next page button's functionality.  It updates the URL of application
@@ -49,4 +52,4 @@ angular.module('socialCopsDemo')
       else if(param === 'teamPerformance') $location.path('/masterBlaster');
       else console.log("Invalid Path Request");
     };
-  };
+  }
