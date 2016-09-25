@@ -6,7 +6,7 @@ angular.module('socialCopsDemo', ['ngRoute']);
  */
 angular.module('socialCopsDemo')
   .config(['$routeProvider', function($routeProvider){
-    console.log("Inside the router");
+    console.log("Inside the router...");
     $routeProvider
       .when('/',{
         templateUrl: 'view/debut.html',
