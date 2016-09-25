@@ -1,6 +1,10 @@
 "use strict";
 angular.module('socialCopsDemo')
     .controller('teamPerformanceController', teamPerformanceController);
+
+//Injecting the dependencies explicitly to avoid post minification errors
+teamPerformanceController.$inject = ['$scope', '$rootScope'];
+
 /**
  * This controllers controls the view for teamPerformanceController.
  * @param   $scope  It acts like a glue between view and controller.
@@ -27,40 +31,40 @@ function teamPerformanceController($scope, $rootScope) {
     let twoWicksWon = 0;
     let threeWicksWon = 0;
     let moreThanThreeWicksWon = 0;
-    if (localStorage.getItem('data') != undefined || localStorage.getItem('data') == '') {
+    if (localStorage.getItem('data') !== undefined || localStorage.getItem('data') === '') {
         data = JSON.parse(localStorage.getItem("data"));
     }
     for (let i in data) {
         if (!$rootScope.ifNaN(data[i].batting_score) && parseInt(data[i].batting_score) < 50) {
             underFifty++;
-            if (data[i].match_result == "won") wonUnderFifty++;
+            if (data[i].match_result === "won") wonUnderFifty++;
         } else if (!$rootScope.ifNaN(data[i].batting_score) && parseInt(data[i].batting_score) >= 50 &&
             parseInt(data[i].batting_score) <= 99) {
             fifty++;
-            if (data[i].match_result == "won") wonFifty++;
+            if (data[i].match_result === "won") wonFifty++;
         } else if (!$rootScope.ifNaN(data[i].batting_score) && parseInt(data[i].batting_score) > 100 &&
             parseInt(data[i].batting_score) < 200) {
             hundred++;
-            if (data[i].match_result == "won") wonHundred++;
+            if (data[i].match_result === "won") wonHundred++;
         } else if (!$rootScope.ifNaN(data[i].batting_score) && parseInt(data[i].batting_score) >= 200) {
             twoHundred++;
-            if (data[i].match_result == "won") wonTwoHundred++;
+            if (data[i].match_result === "won") wonTwoHundred++;
         }
-        if (!$rootScope.ifNaN(data[i].wickets) && data[i].wickets == 2) {
+        if (!$rootScope.ifNaN(data[i].wickets) && parseInt(data[i].wickets) === 1) {
             oneWick++;
-            if (data[i].match_result == "won") oneWickWon++;
+            if (data[i].match_result === "won") oneWickWon++;
         }
-        if (!$rootScope.ifNaN(data[i].wickets) && data[i].wickets == 2) {
+        if (!$rootScope.ifNaN(data[i].wickets) && parseInt(data[i].wickets) === 2) {
             twoWicks++;
-            if (data[i].match_result == "won") twoWicksWon++;
+            if (data[i].match_result === "won") twoWicksWon++;
         }
-        if (!$rootScope.ifNaN(data[i].wickets) && data[i].wickets == 3) {
+        if (!$rootScope.ifNaN(data[i].wickets) && parseInt(data[i].wickets) === 3) {
             threeWicks++;
-            if (data[i].match_result == "won") threeWicksWon++;
+            if (data[i].match_result === "won") threeWicksWon++;
         }
-        if (!$rootScope.ifNaN(data[i].wickets) && data[i].wickets > 3) {
+        if (!$rootScope.ifNaN(data[i].wickets) && parseInt(data[i].wickets) > 3) {
             moreThanThreeWicks++;
-            if (data[i].match_result == "won") moreThanThreeWicksWon++;
+            if (data[i].match_result === "won") moreThanThreeWicksWon++;
         }
     }
     let winningPercent = document.getElementById("winningPercent");
@@ -125,4 +129,4 @@ function teamPerformanceController($scope, $rootScope) {
         type: 'horizontalBar',
         data: graphWicksData
     });
-};
+}
